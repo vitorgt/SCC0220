@@ -1,6 +1,5 @@
 #include<iostream>
-#include<vector>
-#include<math.h>
+#include<string>
 #include<iomanip>
 
 using namespace std;
@@ -9,35 +8,35 @@ using namespace std;
 #define mp make_pair
 #define ll long long
 
+string add(string n1, string n2){
+	return "a";
+}
+
+string mul(string n1, string n2, string m){
+	cout << n1 << endl << n2 << endl << m << endl;
+	if(n2 == "-" || n2 == "")
+		return m;
+	int i = n2.size()-1, zeros = 0;
+	for(; i > 0 && n2[i] == '0'; i--, zeros++);
+	int last = n2[i];
+	while(last--)
+		m = add(m, n1+string(zeros, '0'));
+	return mul(n1, string(n2.begin(), n2.end()-1), m);
+}
+
 int main(){
 
 	ios::sync_with_stdio(false); cout << fixed << setprecision(3);
 
-	int n;
-	double x, y;
-	pair<double,double> rabbit, fox;
-	vector< pair<double,double> > holes;
+	string op, n1, n2;
+	cin >> op >> n1 >> n2;
 
-	cin >> n >> x >> y;
-	rabbit.first = x;
-	rabbit.second = y;
-	cin >> x >> y;
-	fox.first = x;
-	fox.second = y;
-	for(int i = 0; i < n; i++){
-		cin >> x >> y;
-		holes.pb(mp(x,y));
-	}
-
-	for(pair<double,double> hole : holes){
-		double distRab = sqrt(pow(hole.first-rabbit.first,2)+pow(hole.second-rabbit.second,2));
-		double distFox = sqrt(pow(hole.first-fox.first,2)+pow(hole.second-fox.second,2));
-		if(2*distRab < distFox){
-			cout << "O coelho pode escapar pelo buraco (" << hole.first << "," << hole.second << ").\n";
-			return 0;
-		}
-	}
-	cout << "O coelho nao pode escapar.\n";
-	return 0;
-
+	if(op[2] == 'M')
+		cout << add(n1, n2) << endl;
+	else if(op[2] == 'B')
+		cout << add(n1, "-"+n2) << endl;
+	else if(op[2] == 'L')
+		cout << mul(n1, n2, "0") << endl;
+	else if(op[2] == 'V')
+		cout << mul(n1, n2, "0") << endl;
 }
