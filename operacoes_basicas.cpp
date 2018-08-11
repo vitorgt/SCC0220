@@ -8,6 +8,10 @@ using namespace std;
 #define mp make_pair
 #define ll long long
 
+string sub(string n1, string n2){
+    return "a";
+}
+
 string add(string n1, string n2){
     if((n1[0] == '-') != (n2[0] == '-'))// XOR
         /* If both of them are positives, sum.
@@ -15,13 +19,23 @@ string add(string n1, string n2){
          * if one is posituve and the other negative, subtract.
          */
         return sub(n1, n2);
+
+    bool bothNegatives = false;
+    if((n1[0] == '-') && (n2[0] == '-'))
+        bothNegatives = true;
+        
+    if(n1[0] == '-')
+        n1 = string(n1.begin()+1, n1.end());
+    if(n2[0] == '-')
+        n2 = string(n2.begin()+1, n2.end());
+
     string sum = "";
     if(n1.length() > n2.length())
         // complete the number with zeros on the left
         // so both of them have the same size now
-        n2.insert(0, abs(n1.length() - n2.length()), '0');
+        n2.insert(0, abs((int)n1.length() - (int)n2.length()), '0');
     else
-        n1.insert(0, abs(n1.length() - n2.length()), '0');
+        n1.insert(0, abs((int)n1.length() - (int)n2.length()), '0');
     int carry = 0;
     for(int i = n1.length()-1; i > 0; i--){
         int digit = (n1[i]-'0') + (n2[i]-'0') + carry;
@@ -30,8 +44,11 @@ string add(string n1, string n2){
     }
     if(carry)
         sum.pb(carry+'0');
-    reverse(sum.begin(), sum.end());
-    return sum
+    if(bothNegatives)
+        sum.pb('-');
+    for(int i = 0, j = sum.length(); i < sum.length(); i++, j--)
+        swap(sum[i], sum[j]);
+    return sum;
 }
 
 string mul(string n1, string n2, string m){
