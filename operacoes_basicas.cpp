@@ -37,7 +37,7 @@ string add(string n1, string n2){
     else
         n1.insert(0, abs((int)n1.length() - (int)n2.length()), '0');
     int carry = 0;
-    for(int i = n1.length()-1; i > 0; i--){
+    for(int i = n1.length()-1; i >= 0; i--){
         int digit = (n1[i]-'0') + (n2[i]-'0') + carry;
         sum.pb(digit%10+'0');
         carry = digit/10;
@@ -54,15 +54,14 @@ string add(string n1, string n2){
 }
 
 string mul(string n1, string n2, string m){
-	cout << n1 << endl << n2 << endl << m << endl;
-	if(n2 == "-" || n2 == "")
+	if(n2[0] == '0')
 		return m;
-	int i = n2.size()-1, zeros = 0;
-	for(; i > 0 && n2[i] == '0'; i--, zeros++);
-	int last = n2[i];
+	int i, zeros = 0;
+	for(i = n2.size()-1; i >= 0 && n2[i] == '0'; i--, zeros++);
+	int last = n2[i]-'0';
 	while(last--)
 		m = add(m, n1+string(zeros, '0'));
-	return mul(n1, string(n2.begin(), n2.end()-1), m);
+	return mul(n1, string(n2.begin(), n2.end()-(1+zeros))+string(1+zeros, '0'), m);
 }
 
 int main(){
@@ -77,7 +76,7 @@ int main(){
 	else if(op[2] == 'B')
 		cout << sub(n1, n2) << endl;
 	else if(op[2] == 'L')
-		cout << mul(n1, n2, "0") << endl;
+		cout << mul(n1, n2, "") << endl;
 	else if(op[2] == 'V')
-		cout << mul(n1, n2, "0") << endl;
+		cout << mul(n1, n2, "") << endl;
 }
