@@ -16,7 +16,6 @@ int main(){
 	int n;
 	double x, y;
 	pair<double,double> rabbit, fox;
-	vector< pair<double,double> > holes;
 
 	cin >> n >> x >> y;
 	rabbit.first = x;
@@ -26,18 +25,14 @@ int main(){
 	fox.second = y;
 	for(int i = 0; i < n; i++){
 		cin >> x >> y;
-		holes.pb(mp(x,y));
-	}
-
-	for(pair<double,double> hole : holes){
-		double distRab = sqrt(pow(hole.first-rabbit.first,2)+pow(hole.second-rabbit.second,2));
-		double distFox = sqrt(pow(hole.first-fox.first,2)+pow(hole.second-fox.second,2));
+		double distRab = sqrt(pow(x-rabbit.first,2)+pow(y-rabbit.second,2));
+		double distFox = sqrt(pow(x-fox.first,2)+pow(y-fox.second,2));
 		if(2*distRab < distFox){
-			cout << "O coelho pode escapar pelo buraco (" << hole.first << "," << hole.second << ").\n";
+			cout << "The rabbit can escape through the hole (" << x << "," << y << ").\n";
 			return 0;
 		}
 	}
-	cout << "O coelho nao pode escapar.\n";
+	cout << "The rabbit can't escape.\n";
 	return 0;
 
 }
