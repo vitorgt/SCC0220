@@ -24,39 +24,14 @@ string add(string n1, string n2){
         n1.insert(0, abs(n1.length() - n2.length()), '0');
     int carry = 0;
     for(int i = n1.length()-1; i > 0; i--){
-        
+        int digit = (n1[i]-'0') + (n2[i]-'0') + carry;
+        sum.pb(digit%10+'0');
+        carry = digit/10;
     }
-}
-
-string add(string str1, string str2){
-    // Traverse from end of both strings
-    for (int i=n1-1; i>=0; i--)
-    {
-        // Do school mathematics, compute sum of
-        // current digits and carry
-        int sum = ((str1[i]-'0') +
-                   (str2[i+diff]-'0') +
-                   carry);
-        str.push_back(sum%10 + '0');
-        carry = sum/10;
-    }
- 
-    // Add remaining digits of str2[]
-    for (int i=n2-n1-1; i>=0; i--)
-    {
-        int sum = ((str2[i]-'0')+carry);
-        str.push_back(sum%10 + '0');
-        carry = sum/10;
-    }
- 
-    // Add remaining carry
-    if (carry)
-        str.push_back(carry+'0');
- 
-    // reverse resultant string
-    reverse(str.begin(), str.end());
- 
-    return str;
+    if(carry)
+        sum.pb(carry+'0');
+    reverse(sum.begin(), sum.end());
+    return sum
 }
 
 string mul(string n1, string n2, string m){
