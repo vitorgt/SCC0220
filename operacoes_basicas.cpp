@@ -75,8 +75,16 @@ int main(){
 		cout << add(n1, n2) << endl;
 	else if(op[2] == 'B')
 		cout << sub(n1, n2) << endl;
-	else if(op[2] == 'L')
-		cout << mul(n1, n2, "") << endl;
+	else if(op[2] == 'L'){
+	    bool xorNegatives = false;
+	    if((n1[0] == '-') != (n2[0] == '-'))
+	        xorNegatives = true;
+	    if(n1[0] == '-')
+	        n1 = string(n1.begin()+1, n1.end());
+        if(n2[0] == '-')
+            n2 = string(n2.begin()+1, n2.end());
+		cout << (xorNegatives?"-":"") + mul(n1, n2, "") << endl;
+	}
 	else if(op[2] == 'V')
 		cout << mul(n1, n2, "") << endl;
 }
