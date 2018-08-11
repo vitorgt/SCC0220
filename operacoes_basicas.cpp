@@ -46,9 +46,11 @@ string add(string n1, string n2){
         sum.pb(carry+'0');
     if(bothNegatives)
         sum.pb('-');
-    for(int i = 0, j = sum.length(); i < sum.length(); i++, j--)
-        swap(sum[i], sum[j]);
-    return sum;
+    string sumRe = "";
+    for(int i = sum.length()-1; i >= 0; i--){
+        sumRe.pb(sum[i]);
+    }
+    return sumRe;
 }
 
 string mul(string n1, string n2, string m){
