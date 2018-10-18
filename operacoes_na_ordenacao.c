@@ -41,7 +41,7 @@ void printdata(){
 	printf("Q: %10dC %10dM\n", data[4][0], data[4][1]);
 }
 
-void i(int *v, int n){
+void I(int *v, int n){
 	int i = 1, j = 0, k = 0;
 	for(; i < n; i++){
 		k = v[i];
@@ -54,7 +54,7 @@ void i(int *v, int n){
 	}
 }
 
-void b(int *v, int n){
+void B(int *v, int n){
 	int i = 0, j = 0;
 	for(; i < n-1; i++)
 		for(j = 0; j < n-i-1; j++)
@@ -65,15 +65,15 @@ void b(int *v, int n){
 			}
 }
 
-void merge(int *v, int l, int mid, int r){
+void merge(int *v, int l, int m, int r){
 }
 
-void m(int *v, int l, int r){
+void M(int *v, int l, int r){
 	if(l < r){
-		int mid = l+(r-1)/2;
-		m(v, l, mid);
-		m(v, mid+1, r);
-		merge(v, l, mid, r);
+		int m = l+(r-1)/2;
+		M(v, l, m);
+		M(v, m+1, r);
+		merge(v, l, m, r);
 	}
 }
 
@@ -94,15 +94,15 @@ int main(){
 
 	if(op[0] == 'I' || op[1] == 'I' || op[2] == 'I' || op[3] == 'I' || op[4] == 'I'){
 		copy_arr(n, in, sort);
-		i(sort, n);
+		I(sort, n);
 	}
 	if(op[0] == 'B' || op[1] == 'B' || op[2] == 'B' || op[3] == 'B' || op[4] == 'B'){
 		copy_arr(n, in, sort);
-		b(sort, n);
+		B(sort, n);
 	}
 	if(op[0] == 'M' || op[1] == 'M' || op[2] == 'M' || op[3] == 'M' || op[4] == 'M'){
 		copy_arr(n, in, sort);
-		m(sort, 0, n-1);
+		M(sort, 0, n-1);
 	}
 	if(op[0] == 'H' || op[1] == 'H' || op[2] == 'H' || op[3] == 'H' || op[4] == 'H'){
 		copy_arr(n, in, sort);
