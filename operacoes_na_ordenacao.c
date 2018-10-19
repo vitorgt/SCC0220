@@ -41,6 +41,12 @@ void printdata(){
 	printf("Q: %10dC %10dM\n", data[4][0], data[4][1]);
 }
 
+void swap(int *a, int *b){
+	int t = *a;
+	*a = *b;
+	*b = t;
+}
+
 void I(int *v, int n){
 	int i = 1, j = 0, k = 0;
 	for(; i < n; i++){
@@ -59,9 +65,12 @@ void B(int *v, int n){
 	for(; i < n-1; i++)
 		for(j = 0; j < n-i-1; j++)
 			if(v[j] > v[j+1]){ data[1][0]++;
+				swap(&v[j], &v[j+1]); data[1][1] += 2;
+				/*
 				int t = v[j];
 				v[j] = v[j+1]; data[1][1]++;
 				v[j+1] = t; data[1][1]++;
+				*/
 			}
 }
 
@@ -130,6 +139,27 @@ void H(int *v, int n){
 	}
 }
 
+int partition(int *v, int l, int r){
+	int pivot = v[(l+r)/2];
+	int i = (l-1), j = 0;
+	for(j = l; j <= r-1; j++){
+		if(v[j] <= pivot){
+			i++;
+			swap(&v[i], &v[j]);
+		}
+	}
+	swap(&v[i+1], &v[r]);
+	return (i+1);
+}
+
+void Q(int *v, int l, int r){
+	if(l < r){
+		int p = partition(v, l, r);
+		Q(v, l, p-1);
+		Q(v, p+1, r);
+	}
+}
+
 int main(){
 	int o = 0, n = 0, in[30004], sort[30004];
 	char op[5], *line = NULL;
@@ -163,6 +193,7 @@ int main(){
 	}
 	if(op[0] == 'Q' || op[1] == 'Q' || op[2] == 'Q' || op[3] == 'Q' || op[4] == 'Q'){
 		copy_arr(n, in, sort);
+		Q(sort, 0, n-1);
 	}
 	printdata();
 
