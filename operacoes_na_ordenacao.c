@@ -2,6 +2,8 @@
 #include<stdlib.h>
 #include<string.h>
 
+#define inf 0x7fffffff
+
 int data[5][2];// Cs and Ms of each sorting algorithm following IBMHQ (see printdata)
 
 void scanop(char *line, char *op){
@@ -163,7 +165,7 @@ void Q(int *v, int l, int r){
 }
 
 char *menorC(char *op){
-	int p = data[0][0], d = 0, i = 0;
+	int p = inf, d = 0, i = 0;
 	for(i = 0; i < 5; i++){
 		if(data[i][0] < p && op[i]){
 			p = data[i][0];
@@ -179,7 +181,7 @@ char *menorC(char *op){
 }
 
 char *maiorC(char *op){
-	int p = data[0][0], d = 0, i = 0;
+	int p = 0, d = 0, i = 0;
 	for(i = 0; i < 5; i++){
 		if(data[i][0] > p && op[i]){
 			p = data[i][0];
@@ -195,7 +197,7 @@ char *maiorC(char *op){
 }
 
 char *menorM(char *op){
-	int p = data[0][1], d = 0, i = 0;
+	int p = inf, d = 0, i = 0;
 	for(i = 0; i < 5; i++){
 		if(data[i][1] < p && op[i]){
 			p = data[i][1];
@@ -211,7 +213,7 @@ char *menorM(char *op){
 }
 
 char *maiorM(char *op){
-	int p = data[0][1], d = 0, i = 0;
+	int p = 0, d = 0, i = 0;
 	for(i = 0; i < 5; i++){
 		if(data[i][1] > p && op[i]){
 			p = data[i][1];
