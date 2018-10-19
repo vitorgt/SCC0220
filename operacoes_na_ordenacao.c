@@ -66,14 +66,67 @@ void B(int *v, int n){
 }
 
 void merge(int *v, int l, int m, int r){
+	int i = 0, j = 0, k = 0;
+	int n1 = m - l + 1;
+	int n2 = r - m;
+	int L[n1], R[n2];
+	for(i = 0; i < n1; i++)
+		L[i] = v[l+i];
+	for(j = 0; j < n2; j++)
+		R[j] = v[m + 1 + j];
+	i = j = 0;
+	k = l;
+	while(i < n1 && j < n2){
+		if(L[i] <= R[j]){ data[2][0]++;
+			v[k++] = L[i++]; data[2][1]++;
+		}
+		else{ data[2][0]++;
+			v[k++] = R[j++]; data[2][1]++;
+		}
+	}
+	while(i < n1){
+		v[k++] = L[i++]; data[2][1]++;
+	}
+	while(j < n2){
+		v[k++] = R[j++]; data[2][1]++;
+	}
 }
 
 void M(int *v, int l, int r){
 	if(l < r){
-		int m = l+(r-1)/2;
+		int m = (l+r)/2;
 		M(v, l, m);
 		M(v, m+1, r);
 		merge(v, l, m, r);
+	}
+}
+
+void heapify(int *v, int n, int i){
+	int largest = i;
+	int l = 2*i+1, r = 2*i+2;
+	if(l < n && v[l] > v[largest]){ data[3][0]++;
+		largest = l;
+	}
+	if(r < n && v[r] > v[largest]){ data[3][0]++;
+		largest = r;
+	}
+	if(largest != i){
+		int t = v[largest];
+		v[largest] = v[i]; data[3][1]++;
+		v[i] = t; data[3][1]++;
+		heapify(v, n, largest);
+	}
+}
+
+void H(int *v, int n){
+	int i = 0;
+	for(i = (n/2)-1; i >= 0; i--)
+		heapify(v, n, i);
+	for(i = n-1; i >= 0; i--){
+		int t = v[i];
+		v[i] = v[0]; data[3][1]++;
+		v[0] = t; data[3][1]++;
+		heapify(v, i, 0);
 	}
 }
 
@@ -106,6 +159,7 @@ int main(){
 	}
 	if(op[0] == 'H' || op[1] == 'H' || op[2] == 'H' || op[3] == 'H' || op[4] == 'H'){
 		copy_arr(n, in, sort);
+		H(sort, n);
 	}
 	if(op[0] == 'Q' || op[1] == 'Q' || op[2] == 'Q' || op[3] == 'Q' || op[4] == 'Q'){
 		copy_arr(n, in, sort);
