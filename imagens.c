@@ -2,14 +2,12 @@
 #include<stdlib.h>
 #include<string.h>
 
+int curr = 0;
+
 typedef struct _nodeQUAT{
 	char c;//0 for black; 1 for white; 2 for 'parent node'
 	struct _nodeQUAT *next[4];
 }nodeQUAT;
-
-typedef struct _quat{
-	nodeQUAT *root;
-}quat;
 
 void removeQUAT(nodeQUAT *a){
 	if(a){
@@ -29,8 +27,6 @@ void parent_allocate_qt(nodeQUAT *p){
 	for(i = 0; i < 4; i++)
 		p->next[i] = (nodeQUAT *)calloc(1, sizeof(nodeQUAT));
 }
-
-int curr = 0;
 
 void fill_qt(nodeQUAT *p, char *txt){
 	if(curr < strlen(txt)){
@@ -62,32 +58,6 @@ int sum_qt(nodeQUAT *p, int power){
 			sum_qt(p->next[2], power/4) +
 			sum_qt(p->next[3], power/4)
 	       );
-}
-
-void print_qt(nodeQUAT *p){
-	if(p){
-		//printf("%p(%d):", (void *)p, p->c);
-		printf("(%d):", p->c);
-		printf("(");
-		print_qt(p->next[0]);
-		print_qt(p->next[1]);
-		print_qt(p->next[2]);
-		print_qt(p->next[3]);
-		printf(") ");
-		/*
-		   if(p->c == 2){
-		   printf("(");
-		   print_qt(p->next[0]);
-		   print_qt(p->next[1]);
-		   print_qt(p->next[2]);
-		   print_qt(p->next[3]);
-		   printf(") ");
-		   }
-		   else{
-		   printf("%c ", p->c?'w':'b');
-		   }
-		 */
-	}
 }
 
 void combine_qt(nodeQUAT *a, nodeQUAT *b, nodeQUAT *c){//a + b = c
@@ -124,51 +94,30 @@ int main(){
 	int op = 0, counter = 1;
 	char *buffer = NULL;
 	scanf("%d\n", &op);
-	quat a, b, c;
+	nodeQUAT *rootA = NULL, *rootB = NULL, *rootC = NULL;
 	while(op--){
-		a.root = (nodeQUAT *)malloc(sizeof(nodeQUAT));
-		b.root = (nodeQUAT *)malloc(sizeof(nodeQUAT));
-		c.root = (nodeQUAT *)malloc(sizeof(nodeQUAT));
-		parent_allocate_qt(c.root);
+		rootA = (nodeQUAT *)malloc(sizeof(nodeQUAT));
+		rootB = (nodeQUAT *)malloc(sizeof(nodeQUAT));
+		rootC = (nodeQUAT *)malloc(sizeof(nodeQUAT));
+		parent_allocate_qt(rootC);
 
 		scanf("%m[^\r\n]%*[\r\n]", &buffer);
 		curr = 0;
-		fill_qt(a.root, buffer);
+		fill_qt(rootA, buffer);
 		free(buffer);
-/*
-		printf("a\n");
-		print_qt(a.root);
-		printf("\n");
-*/
 
 		scanf("%m[^\r\n]%*[\r\n]", &buffer);
 		curr = 0;
-		fill_qt(b.root, buffer);
+		fill_qt(rootB, buffer);
 		free(buffer);
-/*
-		printf("b\n");
-		print_qt(b.root);
-		printf("\n");
-*/
 
-		combine_qt(a.root, b.root, c.root);
-/*
-		printf("c\n");
-		print_qt(c.root);
-		printf("\n");
-		printf("a\n");
-		print_qt(a.root);
-		printf("\n");
-		printf("b\n");
-		print_qt(b.root);
-		printf("\n");
-*/
+		combine_qt(rootA, rootB, rootC);
 
-		printf("%d %d pixels pretos.\n", counter++, sum_qt(c.root, 1024));
+		printf("%d %d pixels pretos.\n", counter++, sum_qt(rootC, 1024));
 
-		removeQUAT(c.root);
-		removeQUAT(a.root);
-		removeQUAT(b.root);
+		removeQUAT(rootC);
+		removeQUAT(rootA);
+		removeQUAT(rootB);
 	}
 	return 0;
 }
