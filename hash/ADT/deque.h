@@ -1,7 +1,7 @@
 #ifndef DEQUE_H
 #define DEQUE_H
 
-typedef int typeDEQUE;
+typedef char *typeDEQUE;
 
 typedef struct _nodeDEQUE{
 	typeDEQUE data;
@@ -12,6 +12,8 @@ typedef struct _deque{
 	nodeDEQUE *head, *tail;
 }deque;
 
+int countDEQUE(deque a);
+typeDEQUE findDEQUE(deque a, typeDEQUE search);
 void push_frontDEQUE(deque *a, typeDEQUE data);
 void push_backDEQUE(deque *a, typeDEQUE data);
 typeDEQUE pop_frontDEQUE(deque *a);

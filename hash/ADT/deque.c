@@ -1,6 +1,27 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 #include"deque.h"
+
+int countDEQUE(deque a){
+	int i = 0;
+	nodeDEQUE *aux = a.head;
+	while(aux){
+		i++;
+		aux = aux->next;
+	}
+	return i;
+}
+
+typeDEQUE findDEQUE(deque a, typeDEQUE search){
+	nodeDEQUE *aux = a.head;
+	while(aux){
+		if(strcmp(aux->data, search) == 0)
+			return aux->data;
+		aux = aux->next;
+	}
+	return NULL;
+}
 
 void push_frontDEQUE(deque *a, typeDEQUE data){
 	nodeDEQUE *n = (nodeDEQUE *)malloc(sizeof(nodeDEQUE));
@@ -41,7 +62,7 @@ typeDEQUE pop_frontDEQUE(deque *a){
 		free(n);
 		return data;
 	}
-	return -1;
+	return NULL;
 }
 
 typeDEQUE pop_backDEQUE(deque *a){
@@ -57,7 +78,7 @@ typeDEQUE pop_backDEQUE(deque *a){
 		free(n);
 		return data;
 	}
-	return -1;
+	return NULL;
 }
 
 typeDEQUE peek_frontDEQUE(deque *a){
@@ -81,8 +102,9 @@ void removeDEQUE(deque *a){
 void printDEQUE(deque a){
 	nodeDEQUE *aux = a.head;
 	while(aux){
-		printf("%d ", aux->data);
+		printf("(%p)|%s|", (void *)aux, aux->data);
 		aux = aux->next;
 	}
-	printf("\n");
+	if(a.head)
+		printf("\n");
 }
