@@ -25,10 +25,8 @@ void remove_itemHASH(deque *h, char *search){
 }
 
 void printHASH(deque *h){
-	for(int i = 0; i < MAX; i++){
-		//printf("%4d:%s\n", i, h[i].head->data);
+	for(int i = 0; i < MAX; i++)
 		printDEQUE(h[i]);
-	}
 	printf("\n");
 }
 
@@ -46,6 +44,7 @@ int hash(char *line){
 				sum += ((int)line[i]-'a')*43;
 			}
 		}
+		if(sum > 2000) return (int)(sum/4);
 		return sum;
 	}
 	return 0;
@@ -60,10 +59,10 @@ int main(){
 
 	while(op != 'f'){
 		scanf("%c %m[^\r\n]%*[\r\n]", &op, &buffer);
-		printf("%c\t%d\t%s\n", op, hash(buffer), buffer);
+		//printf("%c\t%d\t%s\n", op, hash(buffer), buffer);
 		if(op == 'i'){
 			push_backDEQUE(&h[hash(buffer)], buffer);
-			printDEQUE(h[hash(buffer)]);
+			//printDEQUE(h[hash(buffer)]);
 		}
 		else if(op == 'b'){
 			if(findDEQUE(h[hash(buffer)], buffer))
@@ -76,7 +75,7 @@ int main(){
 			remove_itemHASH(&h[hash(buffer)], buffer);
 			free(buffer);
 		}
-		printHASH(h);
+		//printHASH(h);
 	}
 	for(int i = 0; i < MAX; i++)
 		removeHASH(&h[i]);
