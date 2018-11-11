@@ -23,6 +23,17 @@ typeBT maxBT(bt *a){
 		return inf;//retorna erro
 }
 
+typeBT minBT(bt *a){//similar ao maximo porem para a esquerda
+	if(a){
+		while(a->l)
+			a = a->l;
+		return a->v;
+	}
+	else
+		return inf;
+}
+
+
 bt *searcBT(bt *a, typeBT k){//procura o endereco do no com dada chave
 	while(a){//enquanto a for nao nulo
 		if(a){
@@ -43,21 +54,21 @@ bt *searcBT(bt *a, typeBT k){//procura o endereco do no com dada chave
 void printBT(bt *a, char o){//imprime a arvore (ou subarvore)
 	if(a){
 		if(o == 'E'){		//pre order
-			printf(" %d", a->v);
+			printf("%d ", a->v);
 			printBT(a->l, o);
 			printBT(a->r, o);
 		}
-		if(o == 'O'){		//post order
+		else if(o == 'O'){		//post order
 			printBT(a->l, o);
 			printBT(a->r, o);
-			printf(" %d", a->v);
+			printf("%d ", a->v);
 		}
-		if(o == 'N'){		//in order
+		else if(o == 'N'){		//in order
 			printBT(a->l, o);
-			printf(" %d", a->v);
+			printf("%d ", a->v);
 			printBT(a->r, o);
 		}
-		if(o == 'L'){		//breadth-first
+		else if(o == 'L'){		//breadth-first
 			deque *tovisit = NULL, *visited = NULL;
 			tovisit = (deque *)calloc(1, sizeof(deque));
 			visited = (deque *)calloc(1, sizeof(deque));
@@ -71,7 +82,7 @@ void printBT(bt *a, char o){//imprime a arvore (ou subarvore)
 				push_backDEQUE(visited, now);
 			}
 			while(visited->head != NULL)
-				printf(" %d", ((bt *)pop_frontDEQUE(visited))->v);
+				printf("%d ", ((bt *)pop_frontDEQUE(visited))->v);
 			free(tovisit);
 			free(visited);
 		}
@@ -125,7 +136,7 @@ bt *removBT(bt **a, typeBT k){
 			}
 		}
 		else if(found->l != NULL && found->r != NULL){//se tem os dois filhos
-			typeBT tmp = maxBT(found->l), bkp = found->v;
+			typeBT tmp = minBT(found->r), bkp = found->v;
 			if(tmp != inf){
 				free(removBT(a, tmp));
 				found->v = tmp;

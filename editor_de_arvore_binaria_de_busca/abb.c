@@ -65,7 +65,7 @@ int main(){
 			printBT(ward, 'O');
 			printf("\n");
 			printf("Largura: ");
-			printBT(ward, op);
+			printBT(ward, 'L');
 			printf("\n");
 		}
 		scanf("%c", &op);

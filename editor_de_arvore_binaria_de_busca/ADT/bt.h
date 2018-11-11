@@ -10,6 +10,7 @@ typedef struct _bt{
 
 void desalBT(bt *a);
 typeBT maxBT(bt *a);
+typeBT minBT(bt *a);
 bt *searcBT(bt *a, typeBT k);
 void printBT(bt *a, char o);
 bt *removBT(bt **a, typeBT k);
