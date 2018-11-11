@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include"ADT/bt.h"
+#include"ADT/deque.h"
 
 int main(){
 	int in = 0;
@@ -49,6 +50,9 @@ int main(){
 			printf("\n");
 		}
 		else if(op ==  'L'){
+			printf("Largura: ");
+			printBT(ward, op);
+			printf("\n");
 		}
 		else if(op ==  'Y'){
 			printf("InOrdem: ");
@@ -59,6 +63,9 @@ int main(){
 			printf("\n");
 			printf("PosOrdem: ");
 			printBT(ward, 'O');
+			printf("\n");
+			printf("Largura: ");
+			printBT(ward, op);
 			printf("\n");
 		}
 		scanf("%c", &op);
